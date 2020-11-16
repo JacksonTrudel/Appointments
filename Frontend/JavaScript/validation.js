@@ -111,7 +111,8 @@ function validate() {
   // all fields are valid
 
 	const form = document.appt_info_form;
-	storeAppointmentInformation(form.first_name.value, form.last_name.value, form.phone.value.replace(/\D/g, '').substring(0, 10), form.email.value);
+	storeAppointmentInformation(form.first_name.value, form.last_name.value, form.phone.value.replace(/\D/g, '').substring(0, 10), form.email.value,
+                              document.getElementById("subject").value, document.getElementById("notes").value);
   return true;
 }
 
@@ -141,7 +142,7 @@ const isDeleteKey = (event) => {
   return false;
 }
 
-const enforceFormat = (event) => {
+const format = (event) => {
   // Input must be of a valid number format or a modifier key, and not longer than ten digits
   if (!isNumericInput(event) && !isModifierKey(event)) {
     event.preventDefault();
@@ -184,26 +185,22 @@ const formatPhoneNumber = (event) => {
 };
 
 const inputElement = document.getElementById('phone');
-inputElement.addEventListener('keydown', enforceFormat);
+inputElement.addEventListener('keydown', format);
 inputElement.addEventListener('keyup', formatPhoneNumber);
 
-function storeAppointmentInformation(first_name, last_name, phone, email) {
-
-  message = `{"foo":"store_appt_info", "first":"${first_name}","last":"${last_name}", "phone":"${phone}", "email":"${email}"}`;
+function storeAppointmentInformation(first_name, last_name, phone, email, subject, notes) {
+  message = `{"foo":"store_appt_info", "first":"${first_name}","last":"${last_name}", "phone":"${phone}", "email":"${email}", "subject":"${subject}", "notes":"${notes}"}`;
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
 
       var info = JSON.parse(this.responseText);
       console.log(info);
-
     }
   }
   xmlhttp.open("POST", "../../Backend/appointment_info.php", true);
   xmlhttp.setRequestHeader("Content-type", 'application/json; charset=UTF-8');
   xmlhttp.send(message);
-
-
 }
 
 //The mainContentPage is the content id we are using to rewrite everything

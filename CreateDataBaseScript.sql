@@ -31,11 +31,11 @@ create table customer (
 create table appointment (
   aId integer auto_increment,
   aClient_id integer not null,
-  aWorkday_id integer not null,
+  aWorkday_id integer,
   aSubject varchar(40) not null,
   aNotes varchar(120) not null,
-  aStartTime time not null,
-  aEndTime time not null,
+  aStartTime time,
+  aEndTime time,
   aValid boolean not null,
   foreign key (aClient_id) references customer(cId),
   foreign key (aWorkday_id) references workday(wId),
@@ -49,3 +49,22 @@ create table availabilityBlackout (
   aEndTime time not null,
   index(aId)
 );
+
+# Dictionary for dDayKey:
+#             0 - Sunday
+#             1 - Monday
+#             2 - Tuesday
+#             ...
+#             5 - Friday
+#             6 - Saturday
+create table defaultAvailabilityDay (
+  dDayKey integer not null,
+  dStartTime time not null,
+  dEndTime time not null,
+  dUnavailable boolean not null,
+  index(dDayKey)
+);
+
+insert into defaultAvailabilityDay (dDayKey, dStartTime, dEndTime, dUnavailable)
+  values (0, "080000", "170000", true), (1, "080000", "170000", false), (2, "080000", "170000", false),
+    (3, "080000", "170000", false), (4, "080000", "170000", false), (5, "080000", "170000", false), (6, "080000", "170000", true);

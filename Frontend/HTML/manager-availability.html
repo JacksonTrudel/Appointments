@@ -1,45 +1,169 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8"/>
-		<title>Homepage</title>
-		<!-- Bootstrap core CSS -->
-		<link href="../CSS/bootstrap-4.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
-	</head>
 
-	<body>
-		<header>
-			<!-- Fixed navbar -->
-			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarCollapse">
+<head>
+	<meta charset="utf-8" />
+	<title>Homepage</title>
+	<!-- Bootstrap core CSS -->
+	<link href="../CSS/bootstrap-4.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+	<script src="../JavaScript/availability.js"></script>
+
+</head>
+
+<body>
+	<header>
+		<!-- Fixed navbar -->
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarCollapse">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item">
-						<a class="nav-link" href="./manage-homepage.html">Home</a>
+						<a class="nav-link" href="./manager-homepage.html">Home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="./manage-availability.html">Availability</a>
+						<a class="nav-link active" href="./manager-availability.html">Availability</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="./view-appointments.html">View Appointments</a>
 					</li>
 				</ul>
-				</div>
-			</nav>
-		</header>
-		<!-- Begin page content -->
-		<main role="main" class="container" id = "mainPageContainer">
-			<h1 class="mt-5">Welcome To Our Homepage</h1>
-		</main>
-		<!-- Bootstrap core JavaScript
-		================================================== -->
-		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+				<form method="post" action="..\..\Backend\logout.php">
+					<button type="submit" class="btn btn-outline-danger my-2 my-sm-0" name="logout">Log Out</button>
+				</form>
+			</div>
+		</nav>
+	</header>
+	<!-- Begin page content -->
+	<main role="main" class="container" id="mainPageContainer">
+		<!-- "Manage your availability."-->
+		<div class="py-5 text-center">
+			<p class="lead" style="margin-top:30px">Manage your availability.</p>
+		</div>
+		<!-- Main Row, divided into default availability and special dates -->
+		<div class="row">
+			<!-- Special dates section -->
+			<div class="col-md-4 order-md-2 mb-4" id="special_dates_content">
+				<h4 class="d-flex justify-content-between align-items-center mb-3">
+					<!-- Special dates header and badge -->
+					<span class="text-muted">Special Dates</span>
+					<span class="badge badge-secondary badge-pill" id="total_special">0</span>
+				</h4>
+				<ul class="list-group mb-3" id="product_list">
+					<div id="product_insert_div">
+						<!-- Default - EMPTY -->
+						<div class="list-group-item d-flex justify-content-between lh-condensed bg-light" style="max-height:50px; width = 100%; text-align: center">
+							<h6 style="margin: auto auto">EMPTY</h6>
 
-	</body>
+						</div>
+
+					</div>
+					<!-- example
+                        <li class="list-group-item d-flex justify-content-between">
+                            <h6><span>Total (USD)</span></h6>
+                            <strong id="purchase_total">$0</strong>
+                        </li>
+											-->
+				</ul>
+
+				<div class="d-flex my-2">
+					<button type="button" class="btn btn-success" id="complete_button" style="width: 100%; display:none" onclick="completePurchase()">Complete</button>
+				</div>
+
+			</div>
+
+			<!-- Default Availability Section -->
+			<div class="col-md-8 order-md-1" id="default_availability_section">
+
+				<h5 class="mb-3">Default Availability</h5>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item" id="sunday">
+						<b>Sunday:</b> <span id="sunday_start"></span> to <span id="sunday_end"></span>
+					</li>
+					<li class="list-group-item" id="monday">
+						<b>Monday:</b> <span id="monday_start"></span> to <span id="monday_end"></span>
+					</li>
+					<li class="list-group-item" id="tuesday">
+						<b>Tuesday:</b> <span id="tuesday_start"></span> to <span id="tuesday_end"></span>
+					</li>
+					<li class="list-group-item" id="wednesday">
+						<b>Wednesday:</b> <span id="wednesday_start"></span> to <span id="wednesday_end"></span>
+					</li>
+					<li class="list-group-item" id="thursday">
+						<b>Thursday:</b> <span id="thursday_start"></span> to <span id="thursday_end"></span>
+					</li>
+					<li class="list-group-item" id="friday">
+						<b>Friday:</b> <span id="friday_start"></span> to <span id="friday_end"></span>
+					</li>
+					<li class="list-group-item" id="saturday">
+						<b>Saturday:</b> <span id="saturday_start"></span> to <span id="saturday_end"></span>
+					</li>
+					<ul>
+						<script type="text/javascript">
+							displayDefaultAvailability();
+						</script>
+						<!--
+                        <form class="needs-validation" id="purchase_form" novalidate>
+                            <div class="row">
+                                <div class="col-md-6 my-3">
+                                    <select class="form-control" id="supplier_dropdown" onchange="checkAddSupplier(this)">
+                                    </select>
+
+
+                                </div>
+
+                                <div class="col-md-6 my-3">
+                                    <input type="date" class="form-control" id="purchase_date" placeholder="YYYY-MM-DD" onchange="purchaseInputChanged()" aria-label="Purchase Date" aria-describedby="basic-addon2">
+                                </div>
+
+                                <div class="form-row" id="ifAddSupplier" style="display:none; margin:0 0 15px 15px">
+
+                                    <div class="input-group md-12">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Name: </span>
+                                        </div>
+
+                                        <input type="text" class="form-control" id="new_supplier" placeholder="..." aria-label="New Rating" aria-describedby="basic-addon2">
+                                        <div class="input-group-append" style="width:200px">
+                                            <select class="form-control" id="supplier_type_dropdown" onchange="addSupplierTypeChanged()">
+                                                <option value="" disabled selected>Type</option>
+                                                <option>Dispensary</option>
+                                                <option>Plug</option>
+                                            </select>
+
+
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-success" onClick="addSupplier()">Add</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="incomplete_warning" style="display:none; width:100%; margin:10px 15px">
+
+                                </div>
+                                <div class="form-row col-md-12" id="continue_purchase_button" style="margin:0 15px 15px 0px">
+                                    <button type="button" class="btn btn-primary" onClick="setPurchaseInfo()" style="margin: 0 auto">Continue</button>
+                                </div>
+
+                            </div>
+                    </form>
+									-->
+
+			</div>
+		</div>
+
+	</main>
+	<!-- Bootstrap core JavaScript
+		================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+
 </html>

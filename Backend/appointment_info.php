@@ -7,6 +7,8 @@
 	{
 		$database = new Database();
 		$conn = $database->getConnection();
+
+				$conn2 = $database->getConnection();
 		$response = new \stdClass();
 
 		$response->conn = $conn;
@@ -38,26 +40,23 @@
 	}
 
 	function add_appointment_information($transmit){
-    global $conn, $response;
+    global $conn, $conn2,$response;
 		$new_customer_id = -1;
-		$stmt = $conn->query("call createCustomer(\"".$transmit["first"]."\",\"".$transmit["last"]."\",
-		                        \"".$transmit["phone"]."\", \"".$transmit["email"]."\")");
+		$stmt = $conn->query("call createCustomer(\"".$transmit["first"]."\",\"".$transmit["last"]."\",\"".$transmit["phone"]."\", \"".$transmit["email"]."\")");
 
 		while ($row = $stmt->fetch()) {
-			$response->_id = $row["customer_id"];
+			$response->_id = intval($row["customer_id"]);
 		}
 
-		/* Cannot test because will always fail key constraint.
-		$stmt2 = $conn->query("call createAppointment(:".()$response->id).",\"".$transmit["subject"]."\",
-		                        \"".$transmit["notes"]."\")");
+		// Cannot test because will always fail key constraint.
+		$nextstm = $conn2->query("call createAppointment(".$response->_id.",\"".$transmit["subject"]."\",\"".$transmit["notes"]."\")");
+		$response->query2 = "call createAppointment(".($response->_id).",\"".$transmit["subject"]."\",\"".$transmit["notes"]."\")";
 
-		while ($row = $stmt2->fetch()) {
-			$response->_appt_id = $row["appointment_id"];
-		}*/
+		while ($nextRow = $nextstm->fetch()) {
+			$response->_appt_id = $nextRow["appointment_id"];
+		}
 
 
 
-		//$stmt = $conn->prepare("insert into customer (cName, cPhone, cEmail) values (\"".$transmit["first"]."\",\"".$transmit["last"]."\",
-		//                        \"".$transmit["phone"]."\", \"".$transmit["email"]."\")");
   }
 ?>

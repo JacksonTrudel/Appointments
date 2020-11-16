@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Homepage</title>
+	<!-- Bootstrap core CSS -->
+	<link href="../CSS/bootstrap-4.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../CSS/login-styles.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+	<!-- Begin page content -->
+	<main role="main" class="container-fluid" id="mainPageContainer">
+
+		<div class="row-fluid">
+			<!-- Login Card -->
+			<div class="card rounded">
+				<h1 style="font-family: 'Playfair Display', serif;">Login</h1>
+				<form name="login_form" method="post" action="../../Backend/login.php">
+					<!-- Username Field -->
+					<div class="row" style="padding: 10px 15%">
+						<label for="username">Username</label>
+						<div class="input-group">
+							<input type="text" class="form-control" name="username" id="username">
+						</div>
+					</div>
+					<!-- Password Field -->
+					<div class="row" style="padding: 10px 15%">
+						<label for="password">Password</label>
+						<div class="input-group">
+							<input type="password" class="form-control" name="password" id="password">
+						</div>
+					</div>
+					<!-- Submit button -->
+					<div class="row" style="padding: 10px 15%">
+						<button type="submit" class="btn btn-primary" name="submit" style="margin:0 auto">Login</button>
+					</div>
+					<!-- return to homepage -->
+					<a href="homepage.html" style="margin:0 auto">Return to Homepage</button>
+
+				</form>
+			</div>
+
+	</main>
+	<!-- Bootstrap core JavaScript
+		================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -7,8 +7,7 @@
 	{
 		$database = new Database();
 		$conn = $database->getConnection();
-
-				$conn2 = $database->getConnection();
+		$response->sessiontest = $database->createSession();
 		$response = new \stdClass();
 
 		$response->conn = $conn;
@@ -40,7 +39,7 @@
 	}
 
 	function add_appointment_information($transmit){
-    global $conn, $conn2,$response;
+    global $database, $conn, $response;
 		$new_customer_id = -1;
 		$stmt = $conn->query("call createCustomer(\"".$transmit["first"]."\",\"".$transmit["last"]."\",\"".$transmit["phone"]."\", \"".$transmit["email"]."\")");
 
@@ -48,15 +47,14 @@
 			$response->_id = intval($row["customer_id"]);
 		}
 
-		// Cannot test because will always fail key constraint.
-		$nextstm = $conn2->query("call createAppointment(".$response->_id.",\"".$transmit["subject"]."\",\"".$transmit["notes"]."\")");
-		$response->query2 = "call createAppointment(".($response->_id).",\"".$transmit["subject"]."\",\"".$transmit["notes"]."\")";
+		// PDO limited to one query, generate another PDO with $database->getConnection()
+		$conn = $database->getConnection();
 
-		while ($nextRow = $nextstm->fetch()) {
-			$response->_appt_id = $nextRow["appointment_id"];
+		$stmt = $conn->query("call createAppointment(".$response->_id.",\"".$transmit["subject"]."\",\"".$transmit["notes"]."\")");
+
+		while ($row = $stmt->fetch()) {
+			$_SESSION['appt_id'] = $row["appointment_id"];
+			$response->_appt_id = $_SESSION['appt_id'];
 		}
-
-
-
   }
 ?>

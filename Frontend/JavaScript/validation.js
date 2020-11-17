@@ -1,16 +1,3 @@
-const email = document.appt_info_form.email;
-email.addEventListener("input", function(event) {
-  var emailID = document.appt_info_form.email.value;
-  atpos = emailID.indexOf("@");
-  dotpos = emailID.lastIndexOf(".");
-
-  if (atpos < 1 || (dotpos - atpos < 2)) {
-    email.setCustomValidity("I am expecting an email address!");
-  } else {
-    email.setCustomValidity("");
-  }
-});
-
 function validateNames() {
   const firstname = document.appt_info_form.first_name.value;
   const lastname = document.appt_info_form.last_name.value;
@@ -52,6 +39,18 @@ function validatePhone() {
     return false;
   }
   return true;
+}
+
+function emailListener() {
+  var emailID = document.appt_info_form.email.value;
+  atpos = emailID.indexOf("@");
+  dotpos = emailID.lastIndexOf(".");
+
+  if (atpos < 1 || (dotpos - atpos < 2)) {
+    email.setCustomValidity("I am expecting an email address!");
+  } else {
+    email.setCustomValidity("");
+  }
 }
 
 function validateEmail() {
@@ -142,7 +141,7 @@ const isDeleteKey = (event) => {
   return false;
 }
 
-const format = (event) => {
+const filterKeys = (event) => {
   // Input must be of a valid number format or a modifier key, and not longer than ten digits
   if (!isNumericInput(event) && !isModifierKey(event)) {
     event.preventDefault();
@@ -183,270 +182,3 @@ const formatPhoneNumber = (event) => {
     target.value = `(${areaCode}`;
   }
 };
-
-const inputElement = document.getElementById('phone');
-inputElement.addEventListener('keydown', format);
-inputElement.addEventListener('keyup', formatPhoneNumber);
-
-function storeAppointmentInformation(first_name, last_name, phone, email, subject, notes) {
-  message = `{"foo":"store_appt_info", "first":"${first_name}","last":"${last_name}", "phone":"${phone}", "email":"${email}", "subject":"${subject}", "notes":"${notes}"}`;
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-
-      var info = JSON.parse(this.responseText);
-      console.log(info);
-    }
-  }
-  xmlhttp.open("POST", "../../Backend/appointment_info.php", true);
-  xmlhttp.setRequestHeader("Content-type", 'application/json; charset=UTF-8');
-  xmlhttp.send(message);
-}
-
-//The mainContentPage is the content id we are using to rewrite everything
-// function getSearchResults(searchTextId, mainContentPage) {
-// 	var i, content ="<div style='margin-top: 10%;'>";
-// 	var xmlhttp = new XMLHttpRequest();
-// 	console.log(searchTextId);
-// 	console.log(mainContentPage);
-// 	if((document.getElementById(searchTextId).value == "") && (mainContentPage == 'itempage_content'))
-// 	{
-// 		//console.log("search is empty and we are on the item page");
-// 		displayAllProducts(mainContentPage);
-// 		return;
-// 	}
-// 	xmlhttp.onreadystatechange = function ()
-// 	{
-// 		if(this.readyState == 4 && this.status == 200)
-// 		{
-// 			var info = JSON.parse(this.responseText);
-// 			var itemname, itemdesc, itemcost, itemimage, itemimagename;
-// 			for(i in info.items)
-// 			{
-// 				if(info.items[i].name.toLowerCase() === document.getElementById(searchTextId).value.toLowerCase())
-//                 {
-//                     itemid = info.items[i].id;
-// 					itemname = info.items[i].name;
-// 					itemdesc = info.items[i].desc;
-// 					itemcost = info.items[i].cost;
-// 					itemimage = "images/" + info.items[i].image;
-// 					itemimagename = info.items[i].image;
-// 						content += `<div class="card col-md-4" style="width: 18rem;">
-// 										<img class="card-img-top" src="${itemimage}" alt="Image name: ${itemimagename}">
-// 										<div class="card-body">
-// 											<p class="card-text"><b>${itemname}</b></p>
-// 											<p class="card-text">${itemdesc}</p>
-// 											<p class="card-text">$${itemcost}</p>
-// 											<button type="button" class="btn btn-info" onClick="gen_code(${itemid})">Request Discount</button>
-// 											<button type="button" class="btn btn-success" onClick="addtoCart(${itemid}, 1)">Add to Cart</button>
-// 										</div>
-// 									</div>`;
-// 				}
-// 			}
-// 			content += "</div>";
-// 			document.getElementById(mainContentPage).innerHTML = content;
-// 		}
-// 	}
-// 	xmlhttp.open("POST", "../../api/get_items.php", true);
-// 	xmlhttp.setRequestHeader("Content-type", 'application/json; charset=UTF-8');
-// 	xmlhttp.send();
-// }
-//
-//
-// function displayAllProducts(ContentPage)
-// {
-// 	var i, content ='<div class="row" style="margin-top: 10%;">';
-//
-// 	var xmlhttp = new XMLHttpRequest();
-// 	xmlhttp.onreadystatechange = function ()
-// 	{
-// 		if(this.readyState == 4 && this.status == 200)
-// 		{
-// 			var info = JSON.parse(this.responseText);
-// 			var itemname, itemdesc, itemcost, itemimagename, itemimage;
-// 			for(i in info.items)
-//             {
-//                 itemid = info.items[i].id;
-// 			itemname = info.items[i].name;
-// 			itemdesc = info.items[i].desc;
-// 			itemcost = info.items[i].cost;
-// 			itemimage = "images/" + info.items[i].image;
-// 			itemimagename = info.items[i].image;
-// 				content += `<div class="card col-md-4" style="width: 18rem;">
-// 								<img class="card-img-top" src="${itemimage}" alt="Image name: ${itemimagename}">
-// 								<div class="card-body">
-// 									<p class="card-text"><b>${itemname}</b></p>
-// 									<p class="card-text">${itemdesc}</p>
-// 									<p class="card-text">$${itemcost}</p>
-// 									<button type="button" class="btn btn-info" onClick="gen_code(${itemid})">Request Discount</button>
-// 									<button type="button" class="btn btn-success" onclick="addtoCart(${itemid}, 1)">Add to Cart</button>
-// 								</div>
-// 							</div>`;
-// 			}
-// 			content += "</div>";
-// 			document.getElementById(ContentPage).innerHTML = content;
-//
-// 		}
-// 	}
-// 	xmlhttp.open("POST", "../../api/get_items.php", true);
-// 	xmlhttp.setRequestHeader("Content-type", 'application/json; charset=UTF-8');
-// 	xmlhttp.send();
-//
-// 	return;
-// }
-//
-// function gen_code(itemid)
-// {
-// 	console.log("gen_code() " + itemid);
-// 	var message = `{"itemid" : "${itemid}"}`;
-// 	var xmlhttp = new XMLHttpRequest();
-// 	xmlhttp.onreadystatechange = function ()
-// 	{
-// 		if(this.readyState == 4 && this.status == 200)
-// 		{
-// 			console.log(this.responseText);
-// 			var info = JSON.parse(this.responseText);
-//
-// 			if(info.code !== 'undefined')
-// 			{
-// 				alert("your code is! " + info.code);
-// 			}
-// 		}
-// 	}
-// 	xmlhttp.open("POST", "../../api/generate_discount.php", true);
-// 	xmlhttp.setRequestHeader("Content-type", 'application/json; charset=UTF-8');
-// 	xmlhttp.send(message);
-// }
-//
-// function addtoCart(itemid, itemquantity)
-// {
-//     var message = `{"foo" : "addCart", "id" : "${itemid}", "quantity" : "${itemquantity}"}`;
-//
-//
-//     var xmlhttp = new XMLHttpRequest();
-//     xmlhttp.onreadystatechange = function () {
-//         console.log(this.responseText);
-//         var info = JSON.parse(this.responseText);
-//
-//
-//         alert("You've successfully added this item to your cart!");
-//     }
-//     xmlhttp.open("POST", "../../api/cart.php", true);
-//     xmlhttp.setRequestHeader("Content-type", 'application/json; charset=UTF-8');
-//     xmlhttp.send(message);
-//
-// }
-//
-// function displayShoppingCart(ContentPage) {
-//
-//     var i, content = ``;
-//
-//
-//     var message = `{"foo" : "getCart"}`;
-//
-//
-//     var xmlhttp = new XMLHttpRequest();
-//     xmlhttp.onreadystatechange = function () {
-//         console.log(this.responseText);
-//         if (this.readyState == 4 && this.status == 200) {
-//             var info = JSON.parse(this.responseText);
-//
-//             if (info.emptyCart) {
-//                 content += `<div class="row justify-content-center" style = "margin-top: 10%;" >
-//                             <div class="card col-md-4" style="width: 18rem;">
-// 								<div class="card-body">
-// 									<p class="card-text">Your shopping cart is empty.</p>
-// 									</div>
-// 							</div></div>`;
-//             }
-//             else {
-//
-//                 var itemname, itemdesc, itemcost, itemquant, itemimage, itemimagename;
-//
-//
-//                 var firstItem = true;
-//
-//                 for (i in info.items) {
-//                     itemid = info.items[i].id;
-//                     itemname = info.items[i].name;
-//                     itemdesc = info.items[i].desc;
-//                     itemquant = info.items[i].quantity;
-//
-//                     itemcost = (info.items[i].cost * itemquant);
-//                     itemimage = "images/" + info.items[i].image;
-//                     itemimagename = info.items[i].image;
-//
-//                     if (firstItem) {
-//                         content += `<div class="row justify-content-center" style = "margin-top: 10%;" >`;
-//                         firstItem = false;
-//                     }
-//                     else
-//                         content += `<div class="row justify-content-center" >`;
-//
-//                     content += `<div class="card" id="cart-full" style="width: 18rem;">
-//                                 <img class="card-img-top" src="${itemimage}" alt="Pic of item">
-//                                     <div class="card-body">
-//                                         <p class="card-text">${itemname}</p>
-//                                         <p class="card-text">Quantity: ${itemquant}</p>
-//                                         <p class="card-text">$${itemcost}</p>
-//                                         <button type="button" class="btn btn-danger" onclick="removeFromCart(${itemid}, 1)">Remove</button>
-//                                         <a href="./checkout.html"><button type="button" class="btn btn-success" onClick="queueCheckout(${itemid})">Proceed to Checkout</button></a>
-//                                     </div>
-//                                 </div>
-//                                 <div class="card" id="discount" style="width: 18rem;">
-//                                     <div class="card-body">
-//                                         <div class="form-group">
-//
-//                                             <input type="text" class="form-control" id="discount-field-${itemid}" placeholder= "Enter your discount code"
-//                                             onkeypress="return validateDiscountCode(event, this);"
-//     										minlength="5" maxlength="5">
-//                                         </div>
-//                                             <button type="button" class="btn btn-info" onclick="applyDiscount(${itemid}, document.getElementById('discount-field-${itemid}').value)">Apply discount</button>
-//
-//                                      </div>
-//                                 </div></div><br>`;
-//
-//                 }
-//             }
-//             content += `</div>`;
-//             document.getElementById(ContentPage).innerHTML = content;
-//
-//         }
-//     }
-//     xmlhttp.open("POST", "../../api/cart.php", true);
-//     xmlhttp.setRequestHeader("Content-type", 'application/json; charset=UTF-8');
-//     xmlhttp.send(message);
-//     return;
-// }
-//
-// function removeFromCart(itemid, itemquantity) {
-//     var message = `{"foo" : "removeItem", "id" : "${itemid}", "quantity" : "${itemquantity}"}`;
-//
-//
-//     var xmlhttp = new XMLHttpRequest();
-//     xmlhttp.onreadystatechange = function () {
-//         console.log(this.responseText);
-//         var info = JSON.parse(this.responseText);
-//
-//     }
-//     xmlhttp.open("POST", "../../api/cart.php", true);
-//     xmlhttp.setRequestHeader("Content-type", 'application/json; charset=UTF-8');
-//     xmlhttp.send(message);
-//
-//     location.reload();
-// }
-//
-// function queueCheckout(itemid) {
-//     var message = `{"foo" : "queueCheckout", "id" : "${itemid}"}`;
-//
-//
-//     var xmlhttp = new XMLHttpRequest();
-//     xmlhttp.onreadystatechange = function () {
-//         console.log(this.responseText);
-//         var info = JSON.parse(this.responseText);
-//
-//     }
-//     xmlhttp.open("POST", "../../api/cart.php", true);
-//     xmlhttp.setRequestHeader("Content-type", 'application/json; charset=UTF-8');
-//     xmlhttp.send(message);
-// }

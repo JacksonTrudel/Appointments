@@ -14,6 +14,7 @@ use AppointmentSystem;
 #create the schemas for the four relations in this database
 create table workday (
   wId integer auto_increment,
+  wDate date not null,
   wOpenTime time not null,
   wCloseTime time not null,
   index(wId)
@@ -51,12 +52,12 @@ create table availabilityBlackout (
 );
 
 # Dictionary for dDayKey:
-#             0 - Sunday
-#             1 - Monday
-#             2 - Tuesday
+#             1 - Sunday
+#             2 - Monday
+#             3 - Tuesday
 #             ...
-#             5 - Friday
-#             6 - Saturday
+#             6 - Friday
+#             7 - Saturday
 create table defaultAvailabilityDay (
   dDayKey integer not null,
   dStartTime time not null,

@@ -7,7 +7,8 @@
 	{
 		$database = new Database();
 		$conn = $database->getConnection();
-		$response->sessiontest = $database->createSession();
+		session_start();
+		//$response->sessiontest = $database->createSession();
 		$response = new \stdClass();
 
 		$response->conn = $conn;
@@ -52,7 +53,7 @@
 
 		$stmt = $conn->query("call createAppointment(".$response->_id.",\"".$transmit["subject"]."\",\"".$transmit["notes"]."\")");
 
-		while ($row = $stmt->fetch()) {
+		if ($row = $stmt->fetch()) {
 			$_SESSION['appt_id'] = $row["appointment_id"];
 			$response->_appt_id = $_SESSION['appt_id'];
 		}

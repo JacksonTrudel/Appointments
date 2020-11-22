@@ -67,17 +67,38 @@
 					</div>
 				</div>
 			</form>
+			<div class="container" id="closed_container" style="padding-top:50px; display:none; justify-content:center;">
+				<h2 style="font-family: 'Libre Franklin', sans-serif;">CLOSED <span id="closed_date"></span></h2>
+			</div>
 
 			<div class="container" id="available_times_container" style="margin-top:50px;">
-				<h4 style="margin-left:10%;">Available Times <span class="badge badge-secondary" id="number-available">5</span></h4>
 
-				<div class="container" id="display_available_container" style="margin-top:20px; width:50%; display:flex; align-content:flex-start;">
+				<h4 style="margin-left:10%;">Available Times <span class="badge badge-secondary" id="number-available">0</span></h4>
 
-					<button type="button" class="btn btn-info appointment-time">Info</button>
-					<button type="button" class="btn btn-info appointment-time">Info</button>
-					<button type="button" class="btn btn-info appointment-time">Info</button>
-					<button type="button" class="btn btn-info appointment-time">Info</button>
-					<button type="button" class="btn btn-info appointment-time">Info</button>
+				<div class="container" id="display_available_container" style="margin-top:20px; width:50%; display:flex; align-content:flex-start; flex-wrap:wrap;">
+
+				</div>
+			</div>
+
+			<!-- accept appointment modal -->
+			<div class="modal" id="confirmation_modal" tabindex="-1">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Confirm Appointment</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<p><strong>Date:</strong> <span id="confirmation_date"></span></p>
+							<p><strong>Start:</strong> <span id="confirmation_start"></span></p>
+							<p><strong>End:</strong> <span id="confirmation_end"></span></p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" onclick="appointmentConfirmed()">Confirm</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -91,6 +112,8 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="../JavaScript/scheduling.js"></script>
 	<script src="../JavaScript/validation.js"></script>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin&display=swap" rel="stylesheet">
 
 </body>
 

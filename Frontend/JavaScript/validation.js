@@ -110,7 +110,7 @@ function validate() {
   // all fields are valid
 
 	const form = document.appt_info_form;
-	storeAppointmentInformation(form.first_name.value, form.last_name.value, form.phone.value.replace(/\D/g, '').substring(0, 10), form.email.value,
+	storeAppointmentInformation(form.first_name.value.trim(), form.last_name.value.trim(), form.phone.value.replace(/\D/g, '').substring(0, 10), form.email.value,
                               document.getElementById("subject").value, document.getElementById("notes").value);
   return true;
 }

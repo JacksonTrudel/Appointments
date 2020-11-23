@@ -65,7 +65,7 @@ function searchForAppointments() {
   if (!passesValidation(date, duration)) {
     return false;
   }
-
+  console.log("making request");
   message = `{"foo":"get_available_appointments", "date":"${date}", "duration":"${duration}"}`;
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
@@ -108,7 +108,7 @@ function searchForAppointments() {
             startSuffix = "pm";
           }
           if (startHour == 0) {
-            startHour = 1;
+            startHour = 12;
           }
 
           timeParts = appEnd.split(":");

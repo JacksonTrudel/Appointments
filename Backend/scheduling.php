@@ -2,7 +2,6 @@
 	include("config/database.php");
 	$obj = json_decode(file_get_contents('php://input'), true);
 
-
 	if($_SERVER["REQUEST_METHOD"] == "POST")
 	{
 		$database = new Database();
@@ -142,23 +141,21 @@
 				$trav = new DateTimeImmutable("{$transmit["date"]} {$response->openTime}");
 				$response->startTime = new DateTimeImmutable("{$transmit["date"]} {$response->openTime}");
 				$interval_num = 0;
-				$adjustIntervalVal = $interval_num;
+
 				while ($trav->modify("+{$transmit["duration"]} minute") <= $response->firstApptStart)
 				{
 					$response->times[$interval_num][0] = $trav->format("H:i");
 					$response->times[$interval_num][1] = $trav->modify("+{$transmit["duration"]} minute")->format("H:i");
 
-					if ($adjustIntervalVal == $interval_num){
-						$trav = $trav->modify("+10 minute");
-					}
-					else {
-						$trav = $trav->modify("+15 minute");
-					}
+
+					$trav = $trav->modify("+15 minute");
+
 					$interval_num++;
 				}
 
 				// STEP 2: GENERATE POSSIBLE APPOINTMENTS "IN THE GAPS" -> BETWEEN SCHEDULED APPOINTMENTS
-				for ($i = 0; i < count($response->appts) - 1; $i++) {
+
+				for ($i = 0; $i < count($response->appts) - 1; $i++) {
 					// next appt start time
 					$response->nextApptStart = new DateTimeImmutable("{$transmit["date"]} {$response->appts[$i + 1][0]}");
 					$response->nextApptStart = $response->nextApptStart->modify("-5 minute");

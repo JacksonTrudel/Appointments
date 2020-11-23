@@ -180,6 +180,10 @@ function appointmentConfirmed() {
           window.location.href ="book-appointment.html";
           alert("Somehow we don't have your booking information!");
         }
+        else if(info.success == 1) {
+          window.location.href ="homepage.html";
+          alert("Your appointment has been booked! Your appointment ID is: " + info.apptId);
+        }
       }
     }
     xmlhttp.open("POST", "../../Backend/scheduling.php", true);

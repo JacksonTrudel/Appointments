@@ -32,13 +32,13 @@
 	</header>
 	<!-- new dynamic content -->
 	<main role="main" class="container" id="itempage_content">
-		<div class="container" style="margin-bottom:100px">
+		<div class="container" style="margin-bottom:20px">
 			<div class="py-5 text-center">
 
 				<p class="lead" style="margin-top:30px">Search for an appointment.</p>
 			</div>
 			<!-- input fields -->
-			<form class="form-inline" style="justify-content: center">
+			<form class="form-inline" id="search_appointment_form" style="justify-content: center">
 
 				<div class="col-md-4 my-3">
 					<div class="input-group md-12">
@@ -57,11 +57,62 @@
 					</div>
 				</div>
 				<div class="col-md-2 my-3">
-					<button type="submit" class="btn btn-primary" onClick="" style="margin: 0 auto">Search</button>
+					<button type="submit" class="btn btn-primary" onClick="return searchAppointment()" style="margin: 0 auto">Search</button>
 
 				</div>
 
 			</form>
+		</div>
+
+		<!-- results section -->
+		<div class="container" id="not_found" style="padding-top:50px; display:none; justify-content:center;">
+			<h2 style="font-family: 'Libre Franklin', sans-serif;">APPOINTMENT NOT FOUND <span id="closed_date"></span></h2>
+		</div>
+		<div class="container" id="appointment_info" style="display:none; justify-content:center">
+			<div class="card" id="appointment_display_card" style="width: 70%;">
+				<div class="card-body">
+					<h5 class="card-title">Appointment Information</h5>
+					<hr>
+					<!--<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>-->
+					<div class="row">
+						<div class="col">
+							<p style="white-space:nowrap;"><strong>Name:</strong> <span id="info_name"></span></p>
+						</div>
+						<div class="col">
+							<p style="white-space:nowrap;"><strong>Date:</strong> <span id="info_date"></span></p>
+						</div>
+						<div class="w-100"></div>
+						<div class="col">
+							<p style="white-space:nowrap;"><strong>Phone:</strong> <span id="info_phone"></span></p>
+						</div>
+						<div class="col">
+							<p style="white-space:nowrap;"><strong>Start time:</strong> <span id="info_start"></span></p>
+						</div>
+						<div class="w-100"></div>
+						<div class="col">
+							<p style="white-space:nowrap;"><strong>Email:</strong> <span id="info_email"></span></p>
+						</div>
+						<div class="col">
+							<p style="white-space:nowrap;"><strong>End time:</strong> <span id="info_end"></span></p>
+						</div>
+					</div>
+						<div class="row">
+							<div class="col">
+								<p><strong>Subject:</strong> <span id="info_subject"></span></p>
+							</div>
+						</div>
+							<div class="row">
+								<div class="col">
+									<p><strong>Notes:</strong> <span id="info_notes"></span></p>
+								</div>
+							</div>
+
+
+					</div>
+					<a href="#" class="card-link">Card link</a>
+					<a href="#" class="card-link">Another link</a>
+				</div>
+			</div>
 		</div>
 
 
@@ -74,7 +125,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="../JavaScript/validation.js"></script>
-	<script src="../JavaScript/booking.js"></script>
+	<script src="../JavaScript/search-appointment.js"></script>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin&display=swap" rel="stylesheet">
 </body>
 
 </html>

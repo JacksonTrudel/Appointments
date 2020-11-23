@@ -273,6 +273,11 @@
 
 		if ($row = $stmt->fetch()) {
 			$response->success = intval($row["success"]);
+
+			if ($response->success == 1)
+				$response->apptId = intval($row["id"]);
+				
+			unset($_SESSION['app_id']);
 		}
 	}
 ?>

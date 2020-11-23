@@ -30,6 +30,30 @@ function validateNames() {
   return true;
 }
 
+// called from search-appointment.js
+function validateLastName(lastname) {
+  if (lastname == "" || lastname.length < 1) {
+    alert("Please enter your last name.");
+    return false;
+  } else if (lastname.length > 50) {
+    alert("Last name is limited to 50 characters. This limit was enforced when you booked your appointment. Current length: " + lastname.length + " characters.");
+    return false;
+  } else if (!lastname.match(/[a-z]+/i) || lastname.match(/\d/g)) {
+    alert("Please enter a valid last name.");
+    return false;
+  }
+  return true;
+}
+
+// called from search-appointment.js
+function validateApptId(id) {
+  if (id == "" || !Number.isInteger(Number(id))) {
+    alert("Please enter a valid appointment ID.");
+    return false;
+  }
+  return true;
+}
+
 function validatePhone() {
   const phoneNum = document.getElementById('phone');
   var input = phoneNum.value.replace(/\D/g, '').substring(0, 10);
@@ -109,9 +133,9 @@ function validate() {
 
   // all fields are valid
 
-	const form = document.appt_info_form;
-	storeAppointmentInformation(form.first_name.value.trim(), form.last_name.value.trim(), form.phone.value.replace(/\D/g, '').substring(0, 10), form.email.value,
-                              document.getElementById("subject").value, document.getElementById("notes").value);
+  const form = document.appt_info_form;
+  storeAppointmentInformation(form.first_name.value.trim(), form.last_name.value.trim(), form.phone.value.replace(/\D/g, '').substring(0, 10), form.email.value,
+    document.getElementById("subject").value, document.getElementById("notes").value);
   return true;
 }
 

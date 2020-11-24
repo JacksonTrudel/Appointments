@@ -120,7 +120,7 @@
 							<input type="hidden" id="change_notes" name="change_notes">
 						</form>
 						<button type="button" class="btn btn-warning" style="margin:0 10px;">Change Time</button>
-						<button type="button" class="btn btn-danger">Cancel Appointment</button>
+						<button type="button" class="btn btn-danger" onclick="onCancelAppointment()">Cancel Appointment</button>
 
 					</div>
 					<div class="container" id="forty_eight_hour_prompt" style="display:none; justify-content:center">
@@ -132,6 +132,28 @@
 
 				</div>
 			</div>
+
+			<!-- cancel appointment modal -->
+			<div class="modal bg-dark" id="cancel_appt_modal" tabindex="-1" style="display:none;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirm Cancellation</h5>
+            </div>
+            <div class="modal-body">
+              <p id="modal_body_text">Press the confirm button to cancel this appointment.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id="close_modal_button" data-dismiss="modal" onclick="closeCancellationModal()">Close</button>
+              <form name="confirm_cancellation" id="confirm_cancellation_button" action="index.html" method="post">
+                <button type="button" class="btn btn-primary" onclick="confirmCancellation()">Confirm Cancellation</button>
+                <input type="hidden" id="appt_id_cancel_appt" name="appt_id_cancel_appt">
+								<input type="hidden" id="appt_canceled" name="appt_canceled" value="0">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 		</div>
 
 
@@ -145,6 +167,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="../JavaScript/validation.js"></script>
 	<script src="../JavaScript/search-appointment.js"></script>
+	<script src="../JavaScript/change-information.js"></script>
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin&display=swap" rel="stylesheet">
 </body>

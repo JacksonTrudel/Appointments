@@ -102,7 +102,7 @@
 				<!-- continue button row -->
 				<div class="form-row" style="justify-content: center">
 					<div class="form-group my-2">
-						<button type="button" class="btn btn-danger" href="../Frontend/HTML/homepage.html" style="margin:0 auto">Cancel</button>
+						<button type="button" class="btn btn-danger" href="../Frontend/HTML/homepage.html" style="margin:0 auto" onclick="cancelChangeInfo()">Cancel</button>
 						<button type="button" class="btn btn-primary" onClick="validateChangeInfo()" style="margin:0 auto">Confirm Information</button>
 					</div>
 				</div>

@@ -31,6 +31,7 @@ function searchAppointment() {
             document.getElementById("forty_eight_hour_prompt").style.display = "none";
 
             document.getElementById("appt_id_change_info").value = appt_id;
+            document.getElementById("appt_id_cancel_appt").value = appt_id;
           }
 
           // format fields
@@ -100,28 +101,4 @@ function searchAppointment() {
 
   // return false so we don't reload page
   return false;
-}
-
-function editInformation() {
-  const appt_id = $("#appointment_info").data("appt_id");
-  //message = `{"foo":"edit_inforamtion", "appt_id":${appt_id}}`;
-  window.location.href ="change-info.html";
-  $("#change-info-content").data("appt_id", appt_id);
-  const id = $("#change-info-content").data("appt_id");
-  console.log(id);
-/*
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-
-      var info = JSON.parse(this.responseText);
-      console.log(info);
-      if (info.error != 1) {
-
-      }
-    }
-  }
-  xmlhttp.open("POST", "../../Backend/search_appointment.php", true);
-  xmlhttp.setRequestHeader("Content-type", 'application/json; charset=UTF-8');
-  xmlhttp.send(message);*/
 }

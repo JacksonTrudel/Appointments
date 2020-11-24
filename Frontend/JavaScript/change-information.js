@@ -22,3 +22,49 @@ function changeAppointmentInformation(first_name, last_name, phone, email, subje
   xmlhttp.setRequestHeader("Content-type", 'application/json; charset=UTF-8');
   xmlhttp.send(message);
 }
+
+function closeCancellationModal() {
+  if (document.getElementById("appt_canceled").value == 0)
+    document.getElementById("cancel_appt_modal").style.display = "none";
+  else
+    window.location.reload();
+}
+
+function onCancelAppointment() {
+  document.getElementById("cancel_appt_modal").style.display = "flex";
+}
+
+function reloadSearchAppointment() {
+  window.location.href = "search-appointment.html";
+}
+
+function cancelChangeInfo() {
+  window.location.href = "../Frontend/HTML/search-appointment.html";
+}
+
+function confirmCancellation() {
+  const appt_id = document.confirm_cancellation.appt_id_cancel_appt.value;
+  message = `{"foo":"cancel_appointment", "appt_id":${appt_id}}`;
+  console.log(message);
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+
+      var info = JSON.parse(this.responseText);
+      console.log(info);
+      if (info.error != 1) {
+        // change interface to indicate appointment has been cancelled
+        document.getElementById("modal_body_text").innerHTML = "Your appointment has been cancelled! You will no longer be able to search for it.";
+        document.getElementById("modal_body_text").style.color = "red";
+        document.getElementById("confirm_cancellation_button").style.display ="none";
+        document.getElementById("appt_canceled").value = 1;
+      }
+      else {
+        alert("Unknown server-side error.");
+      }
+    }
+  }
+  xmlhttp.open("POST", "../../Backend/appointment_info.php", true);
+  xmlhttp.setRequestHeader("Content-type", 'application/json; charset=UTF-8');
+  xmlhttp.send(message);
+}

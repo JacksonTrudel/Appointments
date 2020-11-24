@@ -33,6 +33,10 @@
 					change_appointment_information($obj);
 					break;
 
+				case "cancel_appointment":
+					cancel_appointment($obj);
+					break;
+
 				default:
 					$response->text .= "unable to case switch.";
 					break;
@@ -72,6 +76,15 @@
 		if ($row = $stmt->fetch()) {
 			$response->_success = intval($row["success"]);
 		}
+
+	}
+
+	function cancel_appointment($transmit) {
+		global $database, $conn, $response;
+		$conn = $database->getConnection();
+
+		$stmt = $conn->query("update Appointment set aValid = false where aId = ".$transmit["appt_id"]);
+		$response->row = $stmt->fetch();
 
 	}
 ?>

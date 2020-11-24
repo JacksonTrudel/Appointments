@@ -54,6 +54,18 @@
       $response->end = $row["_end"];
       $response->subject = $row["_subject"];
       $response->notes = $row["_notes"];
+
+      // determine whether appointment is at least 48 hours year away
+      $response->currentDateTime = new DateTimeImmutable();
+      $response->appointmentDateTime = new DateTimeImmutable("{$response->date} {$response->start}");
+      if ($response->currentDateTime->modify("+48 hour") <= $response->appointmentDateTime)
+      {
+        $response->withinFourtyEight = false;
+      }
+      else
+      {
+        $response->withinFortyEight = true;
+      }
     }
     else {
       $response->notFound = 1;

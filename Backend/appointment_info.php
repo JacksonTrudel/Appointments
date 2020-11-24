@@ -29,6 +29,10 @@
 				  add_appointment_information($obj);
 					break;
 
+				case "change_appt_info":
+					change_appointment_information($obj);
+					break;
+
 				default:
 					$response->text .= "unable to case switch.";
 					break;
@@ -58,4 +62,16 @@
 			$response->_appt_id = $_SESSION['appt_id'];
 		}
   }
+
+	function change_appointment_information($transmit){
+		global $database, $conn, $response;
+		$conn = $database->getConnection();
+		//$response->query = "call changeAppointmentInformation(".$transmit["appt_id"].", \"".$transmit["first"]."\",\"".$transmit["last"]."\",\"".$transmit["phone"]."\", \"".$transmit["email"]."\", \"".$transmit["subject"]."\",\"".$transmit["notes"]."\")";
+		$stmt = $conn->query("call changeAppointmentInformation(".$transmit["appt_id"].", \"".$transmit["first"]."\",\"".$transmit["last"]."\",\"".$transmit["phone"]."\", \"".$transmit["email"]."\", \"".$transmit["subject"]."\",\"".$transmit["notes"]."\")");
+		$response->success = 0;
+		if ($row = $stmt->fetch()) {
+			$response->_success = intval($row["success"]);
+		}
+
+	}
 ?>

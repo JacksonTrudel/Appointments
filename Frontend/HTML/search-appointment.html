@@ -96,21 +96,40 @@
 							<p style="white-space:nowrap;"><strong>End time:</strong> <span id="info_end"></span></p>
 						</div>
 					</div>
-						<div class="row">
-							<div class="col">
-								<p><strong>Subject:</strong> <span id="info_subject"></span></p>
-							</div>
+					<div class="row">
+						<div class="col">
+							<p><strong>Subject:</strong> <span id="info_subject"></span></p>
 						</div>
-							<div class="row">
-								<div class="col">
-									<p><strong>Notes:</strong> <span id="info_notes"></span></p>
-								</div>
-							</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<p><strong>Notes:</strong> <span id="info_notes"></span></p>
+						</div>
+					</div>
+					<hr>
+					<div class="row" id="user_menu" style="display:flex; justify-content:center;">
 
+						<form action="..\..\Backend\change-info.php" method="GET">
+							<button type="submit" class="btn btn-info">Edit Information</button>
+							<input type="hidden" id="appt_id_change_info" name="appt_id">
+							<input type="hidden" id="change_first" name="change_first">
+							<input type="hidden" id="change_last" name="change_last">
+							<input type="hidden" id="change_phone" name="change_phone">
+							<input type="hidden" id="change_email" name="change_email">
+							<input type="hidden" id="change_subject" name="change_subject">
+							<input type="hidden" id="change_notes" name="change_notes">
+						</form>
+						<button type="button" class="btn btn-warning" style="margin:0 10px;">Change Time</button>
+						<button type="button" class="btn btn-danger">Cancel Appointment</button>
 
 					</div>
-					<a href="#" class="card-link">Card link</a>
-					<a href="#" class="card-link">Another link</a>
+					<div class="container" id="forty_eight_hour_prompt" style="display:none; justify-content:center">
+						<p style="color:red;">
+							You cannot edit/cancel appointments within 48 hours of the appointment time.
+						</p>
+					</div>
+
+
 				</div>
 			</div>
 		</div>

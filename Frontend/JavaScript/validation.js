@@ -139,6 +139,26 @@ function validate() {
   return true;
 }
 
+function validateChangeInfo() {
+  if (!validateNames())
+    return false;
+  else if (!validatePhone())
+    return false;
+  else if (!validateEmail())
+    return false;
+  else if (!validateSubject())
+    return false;
+  else if (!validateNotes())
+    return false;
+
+  // all fields are valid
+
+  const form = document.appt_info_form;
+  changeAppointmentInformation(form.first_name.value.trim(), form.last_name.value.trim(), form.phone.value.replace(/\D/g, '').substring(0, 10), form.email.value,
+    document.getElementById("subject").value, document.getElementById("notes").value);
+  return true;
+}
+
 const isNumericInput = (event) => {
   const key = event.keyCode;
   return ((key >= 48 && key <= 57) || // Allow number line

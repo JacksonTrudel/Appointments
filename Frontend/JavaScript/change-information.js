@@ -10,8 +10,8 @@ function changeAppointmentInformation(first_name, last_name, phone, email, subje
       var info = JSON.parse(this.responseText);
       console.log(info);
       if (info.error != 1) {
-        alert("Success!");
-        //window.location.href ="search-appointment.html";
+        alert("Successfully updated your appointment information! Your appointment ID is still: " + appt_id + ".");
+        window.location.href ="../Frontend/HTML/search-appointment.html";
       }
       else {
         alert("Unknown server-side error.");

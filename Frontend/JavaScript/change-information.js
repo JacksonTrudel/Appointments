@@ -24,10 +24,9 @@ function changeAppointmentInformation(first_name, last_name, phone, email, subje
 }
 
 function closeCancellationModal() {
-  if (document.getElementById("appt_canceled").value == 0)
     document.getElementById("cancel_appt_modal").style.display = "none";
-  else
-    window.location.reload();
+
+    searchAppointment();
 }
 
 function onCancelAppointment() {
@@ -54,7 +53,7 @@ function confirmCancellation() {
       console.log(info);
       if (info.error != 1) {
         // change interface to indicate appointment has been cancelled
-        document.getElementById("modal_body_text").innerHTML = "Your appointment has been cancelled! You will no longer be able to search for it.";
+        document.getElementById("modal_body_text").innerHTML = "Your appointment has been cancelled!";
         document.getElementById("modal_body_text").style.color = "red";
         document.getElementById("confirm_cancellation_button").style.display ="none";
         document.getElementById("appt_canceled").value = 1;

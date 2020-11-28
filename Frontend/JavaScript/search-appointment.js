@@ -23,9 +23,12 @@ function searchAppointment() {
           document.getElementById("appointment_info").style.display = "flex";
 
           //  show prompt and hide menu or display menu and hide the prompt
-          if (info.withinFortyEight) {
+          if (info.withinFortyEight || info.cancelled == 1) {
             document.getElementById("user_menu").style.display = "none";
             document.getElementById("forty_eight_hour_prompt").style.display = "flex";
+
+            if (info.cancelled == 1)
+              document.getElementById("warning_text").innerHTML = "THIS APPOINTMENT HAS BEEN CANCELLED.";
           } else {
             document.getElementById("user_menu").style.display = "flex";
             document.getElementById("forty_eight_hour_prompt").style.display = "none";

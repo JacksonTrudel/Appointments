@@ -38,6 +38,7 @@ create table appointment (
   aStartTime time,
   aEndTime time,
   aValid boolean not null,
+  aCancelled boolean not null,
   foreign key (aClient_id) references customer(cId),
   foreign key (aWorkday_id) references workday(wId),
   index(aId)
@@ -69,3 +70,4 @@ create table defaultAvailabilityDay (
 create table duration (
 	dLength integer not null
 );
+

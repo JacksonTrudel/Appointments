@@ -1,20 +1,21 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8"/>
-		<title>Homepage</title>
-		<!-- Bootstrap core CSS -->
-		<link href="../CSS/bootstrap-4.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
-	</head>
 
-	<body>
-		<header>
-			<!-- Fixed navbar -->
-			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarCollapse">
+<head>
+	<meta charset="utf-8" />
+	<title>Homepage</title>
+	<!-- Bootstrap core CSS -->
+	<link href="../CSS/bootstrap-4.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<header>
+		<!-- Fixed navbar -->
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarCollapse">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item">
 						<a class="nav-link" href="./manager-homepage.html">Home</a>
@@ -29,20 +30,142 @@
 				<form method="post" action="..\..\Backend\logout.php">
 					<button type="submit" class="btn btn-outline-danger my-2 my-sm-0" name="logout">Log Out</button>
 				</form>
-				</div>
-			</nav>
-		</header>
-		<!-- Begin page content -->
-		<main role="main" class="container" id = "mainPageContainer">
-			<h1 class="mt-5">Welcome To Our Homepage</h1>
-		</main>
-		<!-- Bootstrap core JavaScript
-		================================================== -->
-		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+			</div>
+		</nav>
+	</header>
+	<!-- Begin page content -->
+	<main role="main" class="container" id="mainPageContainer" style="display:flex; justify-content:center;">
+		<div class="container" style="margin-bottom:20px">
+			<div class="py-5 text-center">
 
-	</body>
+				<p class="lead" style="margin-top:30px">View scheduled appointments.</p>
+			</div>
+			<!-- radio toggle -->
+			<div class="container" style="justify-content: center;">
+				<div class="row" style="display:flex; justify-content:center;">
+					<div class="col" style="max-width:400px;">
+						<div class="btn-group btn-group-toggle" data-toggle="buttons" style="display:flex; justify-content: center; width:100%;" onchange="viewAppointmentsInputChange()">
+							<label class="btn btn-outline-secondary active">
+								<input type="radio" name="format" value="h" id="hourly" checked> Hourly
+							</label>
+							<label class="btn btn-outline-secondary">
+								<input type="radio" name="format" value="d" id="daily"> Daily
+							</label>
+							<label class="btn btn-outline-secondary">
+								<input type="radio" name="format" value="w" id="weekly"> Weekly
+							</label>
+						</div>
+					</div>
+					<div class="col" style="max-width:400px;">
+						<div class="input-group">
+
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="basic-addon1">Date </span>
+							</div>
+							<input type="date" class="form-control" id="startDate" onchange="viewAppointmentsInputChange()" placeholder="..." aria-label="date" aria-describedby="basic-addon2">
+
+
+
+
+						</div>
+						<small id="dateHelp" class="form-text text-muted" for="startDate">Start date; searching 5 day period.</small>
+					</div>
+				</div>
+			</div>
+			<!-- no appointment found -->
+			<div class="container" id="not_found" style="padding-top:50px; display:none; justify-content:center;">
+				<p>
+					<h2 style="font-family: 'Libre Franklin', sans-serif;">NO APPOINTMENTS FOUND </h2>
+				</p>
+
+			</div>
+
+			<!-- container used to display appointments in a daily format -->
+			<div class="container" id="day_container" style="display:none;">
+
+				<hr />
+
+				<div class="agenda">
+					<div class="table-responsive">
+						<table class="table table-condensed table-bordered">
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>Time</th>
+									<th>Appointment Information</th>
+								</tr>
+							</thead>
+							<tbody id="daily_body">
+								<!-- Single event in a single day -->
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<!-- formatted for displaying weekly-->
+			<div class="container" id="week_container" style="display:none;">
+
+				<hr />
+
+				<div class="agenda">
+					<div class="table-responsive">
+						<table class="table table-condensed table-bordered">
+							<thead>
+								<tr>
+									<th>Week</th>
+									<th>Date</th>
+									<th>Time</th>
+									<th>Appointment Information</th>
+								</tr>
+							</thead>
+							<tbody id="weekly_body">
+								<!-- Single event in a single day -->
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- cancel appointment modal -->
+			<div class="modal bg-dark" id="cancel_appt_modal" tabindex="-1" style="display:none;">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirm Cancellation</h5>
+            </div>
+            <div class="modal-body">
+              <p id="modal_body_text">Press the confirm button to cancel this appointment.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id="close_modal_button" data-dismiss="modal" onclick="closeCancellationModal()">Close</button>
+              <form name="confirm_cancellation" id="confirm_cancellation_button" action="index.html" method="post">
+                <button type="button" class="btn btn-primary" onclick="confirmCancellation()">Confirm Cancellation</button>
+                <input type="hidden" id="appt_id_cancel_appt" name="appt_id_cancel_appt">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+		</div>
+
+	</main>
+	<!-- Bootstrap core JavaScript
+		================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="../JavaScript/validation.js"></script>
+	<script src="../JavaScript/view-appointments.js"></script>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin&display=swap" rel="stylesheet">
+	<!-- for hourly display styles -->
+	<link rel="stylesheet" href="../CSS/daily-display-styles.css">
+
+</body>
+
 </html>

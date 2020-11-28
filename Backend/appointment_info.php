@@ -83,7 +83,7 @@
 		global $database, $conn, $response;
 		$conn = $database->getConnection();
 
-		$stmt = $conn->query("update Appointment set aValid = false where aId = ".$transmit["appt_id"]);
+		$stmt = $conn->query("update Appointment set aCancelled = true where aId = ".$transmit["appt_id"]);
 		$response->row = $stmt->fetch();
 
 	}

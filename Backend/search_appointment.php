@@ -67,7 +67,7 @@
       $response->appointmentDateTime = new DateTimeImmutable("{$response->date} {$response->start}");
       if ($response->currentDateTime->modify("+48 hour") <= $response->appointmentDateTime)
       {
-        $response->withinFourtyEight = false;
+        $response->withinFortyEight = false;
       }
       else
       {
@@ -131,14 +131,15 @@
 					$response->day[$day_length]->appointment[0]->id = $row["aId"];
 		      // determine whether appointment is at least 48 hours year away
 		      $response->currentDateTime = new DateTimeImmutable();
+					$response->fortyEight = $response->currentDateTime->modify("+48 hour");
 		      $response->appointmentDateTime = new DateTimeImmutable("{$date} {$row["start"]}");
-		      if ($response->currentDateTime->modify("+48 hour") <= $response->appointmentDateTime)
+		      if ($response->fortyEight <= $response->appointmentDateTime)
 		      {
-		        $response->day[$day_length]->appointment[0]->withinFourtyEight = false;
+		        $response->day[$day_length]->appointment[0]->withinFortyEight = false;
 		      }
 		      else
 		      {
-		        $response->day[$day_length]->appointment[0]->withinFourtyEight = true;
+		        $response->day[$day_length]->appointment[0]->withinFortyEight = true;
 		      }
 				}
 				else {
@@ -157,13 +158,14 @@
 					// determine whether appointment is at least 48 hours year away
 				 $response->currentDateTime = new DateTimeImmutable();
 				 $response->appointmentDateTime = new DateTimeImmutable("{$date} {$row["start"]}");
+
 				 if ($response->currentDateTime->modify("+48 hour") <= $response->appointmentDateTime)
 				 {
-					 $response->day[$found]->appointment[$len]->withinFourtyEight = false;
+					 $response->day[$found]->appointment[$len]->withinFortyEight = false;
 				 }
 				 else
 				 {
-					 $response->day[$found]->appointment[$len]->withinFourtyEight = true;
+					 $response->day[$found]->appointment[$len]->withinFortyEight = true;
 				 }
 				}
 			}
@@ -188,6 +190,8 @@
 				$response->week[$i] = new \stdClass();
 				$response->week[$i]->startDate = $tracesWeek->format("Y-m-d");
 				$response->week[$i]->endDate = $tracesWeek->modify("+6 day")->format("Y-m-d");
+				$response->week[$i]->startDateString = $tracesWeek->format("l");
+				$response->week[$i]->endDateString = $tracesWeek->modify("+6 day")->format("l");
 				$response->week[$i]->startDateImmutable = $tracesWeek;
 				$response->week[$i]->endDateImmutable = $tracesWeek->modify("+6 day");
 
@@ -243,11 +247,11 @@
 			      $response->appointmentDateTime = $date;
 			      if ($response->currentDateTime->modify("+48 hour") <= $response->appointmentDateTime)
 			      {
-			        $response->week[$found]->day[$day_length]->appointment[0]->withinFourtyEight = false;
+			        $response->week[$found]->day[$day_length]->appointment[0]->withinFortyEight = false;
 			      }
 			      else
 			      {
-			        $response->week[$found]->day[$day_length]->appointment[0]->withinFourtyEight = true;
+			        $response->week[$found]->day[$day_length]->appointment[0]->withinFortyEight = true;
 			      }
 					}
 					// day exists in week object, make appointment
@@ -269,11 +273,11 @@
 					 $response->appointmentDateTime = $date;
 					 if ($response->currentDateTime->modify("+48 hour") <= $response->appointmentDateTime)
 					 {
-						 $response->week[$found]->day[$found_day]->appointment[$len]->withinFourtyEight = false;
+						 $response->week[$found]->day[$found_day]->appointment[$len]->withinFortyEight = false;
 					 }
 					 else
 					 {
-						 $response->week[$found]->day[$found_day]->appointment[$len]->withinFourtyEight = true;
+						 $response->week[$found]->day[$found_day]->appointment[$len]->withinFortyEight = true;
 					 }
 					}
 				}

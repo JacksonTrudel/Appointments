@@ -3,9 +3,12 @@
 
 <head>
 	<meta charset="utf-8" />
-	<title>Homepage</title>
+	<title>Rendezvous</title>
 	<!-- Bootstrap core CSS -->
 	<link href="../CSS/bootstrap-4.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- for hourly display styles -->
+	<link rel="stylesheet" href="../CSS/daily-display-styles.css">
+	<script src="../JavaScript/login.js"></script>
 </head>
 
 <body>
@@ -74,16 +77,24 @@
 			</div>
 			<!-- no appointment found -->
 			<div class="container" id="not_found" style="padding-top:50px; display:none; justify-content:center;">
+
 				<p>
 					<h2 style="font-family: 'Libre Franklin', sans-serif;">NO APPOINTMENTS FOUND </h2>
 				</p>
 
 			</div>
+			<!-- formatted for displaying hourly-->
+			<div class="container" id="hour_container" style="display:none;">
 
+				<hr style="margin-top:30px;"/>
+
+				<div class="agenda" id="hour_body" style="display:block;">
+				</div>
+			</div>
 			<!-- container used to display appointments in a daily format -->
 			<div class="container" id="day_container" style="display:none;">
 
-				<hr />
+				<hr style="margin-top:30px;"/>
 
 				<div class="agenda">
 					<div class="table-responsive">
@@ -103,11 +114,10 @@
 					</div>
 				</div>
 			</div>
-
 			<!-- formatted for displaying weekly-->
 			<div class="container" id="week_container" style="display:none;">
 
-				<hr />
+				<hr  style="margin-top:30px;"/>
 
 				<div class="agenda">
 					<div class="table-responsive">
@@ -130,24 +140,24 @@
 			</div>
 			<!-- cancel appointment modal -->
 			<div class="modal bg-dark" id="cancel_appt_modal" tabindex="-1" style="display:none;">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Confirm Cancellation</h5>
-            </div>
-            <div class="modal-body">
-              <p id="modal_body_text">Press the confirm button to cancel this appointment.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" id="close_modal_button" data-dismiss="modal" onclick="closeCancellationModal()">Close</button>
-              <form name="confirm_cancellation" id="confirm_cancellation_button" action="index.html" method="post">
-                <button type="button" class="btn btn-primary" onclick="confirmCancellation()">Confirm Cancellation</button>
-                <input type="hidden" id="appt_id_cancel_appt" name="appt_id_cancel_appt">
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Confirm Cancellation</h5>
+						</div>
+						<div class="modal-body">
+							<p id="modal_body_text">Press the confirm button to cancel this appointment.</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" id="close_modal_button" data-dismiss="modal" onclick="closeCancellationModal()">Close</button>
+							<form name="confirm_cancellation" id="confirm_cancellation_button" action="index.html" method="post">
+								<button type="button" class="btn btn-primary" onclick="confirmCancellation()">Confirm Cancellation</button>
+								<input type="hidden" id="appt_id_cancel_appt" name="appt_id_cancel_appt">
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 
 		</div>
 
@@ -163,9 +173,7 @@
 	<script src="../JavaScript/view-appointments.js"></script>
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin&display=swap" rel="stylesheet">
-	<!-- for hourly display styles -->
-	<link rel="stylesheet" href="../CSS/daily-display-styles.css">
-
+	<script>validateLogin()</script>
 </body>
 
 </html>

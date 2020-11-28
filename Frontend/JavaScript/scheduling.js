@@ -43,7 +43,7 @@ function searchForAppointments() {
   if (!passesValidation(date, duration)) {
     return false;
   }
-  console.log("making request");
+  
   message = `{"foo":"get_available_appointments", "date":"${date}", "duration":"${duration}"}`;
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
@@ -169,6 +169,7 @@ function appointmentConfirmed() {
     xmlhttp.send(message);
 
 }
+
 
 var today = new Date();
 var tomorrow = new Date();

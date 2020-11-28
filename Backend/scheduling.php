@@ -34,6 +34,14 @@
 					schedule_appointment($obj);
 					break;
 
+				case "store_appt_id_change_time":
+					store_appt_id_change_time($obj);
+					break;
+
+				case "reschedule_appointment":
+					reschedule_appointment($obj);
+					break;
+
 				default:
 					$response->text .= "unable to case switch.";
 					break;
@@ -276,8 +284,46 @@
 
 			if ($response->success == 1)
 				$response->apptId = intval($row["id"]);
-				
+
 			unset($_SESSION['app_id']);
 		}
+	}
+
+	// for the user to reschedule their appointment
+	function reschedule_appointment($transmit) {
+		global $database, $conn, $response;
+
+		$conn = $database->getConnection();
+		$response->query = "select dayofweek(\"{$transmit['date']}\") as _dayOfWeek";
+		$stmt = $conn->query("select dayofweek(\"{$transmit['date']}\") as _dayOfWeek");
+		$row = $stmt->fetch();
+		$dayOfWeek = intval($row["_dayOfWeek"]);
+
+		if (!isset($_SESSION['appt_id_change_time']))
+		{
+			$response->error = 1;
+			$response->text .= "appt_id_change_time not set";
+
+		}
+		else {
+
+			$id = intval($_SESSION['appt_id_change_time']);
+			$conn = $database->getConnection();
+			$response->query = "call bookAppointment({$id}, \"{$transmit['date']}\", {$dayOfWeek}, \"{$transmit['start']}\", \"{$transmit['end']}\")";
+			$stmt = $conn->query("call bookAppointment({$id}, \"{$transmit['date']}\", {$dayOfWeek}, \"{$transmit['start']}\", \"{$transmit['end']}\")");
+			if ($row2 = $stmt->fetch()) {
+				$response->success = intval($row2["success"]);
+
+				if ($response->success == 1)
+					$response->apptId = intval($row2["id"]);
+			}
+		}
+
+	}
+
+	function store_appt_id_change_time($transmit) {
+			global $database, $response;
+
+			$_SESSION['appt_id_change_time'] = $transmit["appt_id"];
 	}
 ?>

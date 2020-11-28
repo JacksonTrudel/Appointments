@@ -34,6 +34,7 @@ function searchAppointment() {
             document.getElementById("forty_eight_hour_prompt").style.display = "none";
 
             document.getElementById("appt_id_change_info").value = appt_id;
+            document.getElementById("appt_id_change_time").value = appt_id;
             document.getElementById("appt_id_cancel_appt").value = appt_id;
           }
 

@@ -71,3 +71,7 @@ create table duration (
 	dLength integer not null
 );
 
+create table cookie (
+	randomCookie integer not null
+);
+

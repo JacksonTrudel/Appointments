@@ -22,10 +22,10 @@
 						<a class="nav-link" href="./homepage.html">Home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="./book-appointment.html">Book</a>
+						<a class="nav-link" href="./book-appointment.html">Book</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="./search-appointment.html">Search</a>
+						<a class="nav-link active" href="./search-appointment.html">Search</a>
 					</li>
 				</ul>
 			</div>
@@ -35,7 +35,7 @@
 		<div class="container" style="margin-bottom:100px">
 			<div class="py-5 text-center">
 
-				<p class="lead" style="margin-top:30px">Find a time.</p>
+				<p class="lead" style="margin-top:30px">Reschedule your appointment.</p>
 			</div>
 			<!-- input fields -->
 			<form class="form-inline" name="appt_request_form" style="justify-content:center;">
@@ -80,12 +80,14 @@
 				</div>
 			</div>
 
+			<input type="hidden" name="appt_id" id="appt_id">
+
 			<!-- accept appointment modal -->
 			<div class="modal" id="confirmation_modal" tabindex="-1">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title">Confirm Appointment</h5>
+							<h5 class="modal-title">Reschedule Appointment</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
@@ -96,7 +98,7 @@
 							<p><strong>End:</strong> <span id="confirmation_end"></span></p>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" onclick="appointmentConfirmed()">Confirm</button>
+							<button type="button" class="btn btn-primary" onclick="rescheduleConfirmed()">Confirm</button>
 						</div>
 					</div>
 				</div>
@@ -112,6 +114,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="../JavaScript/scheduling.js"></script>
 	<script src="../JavaScript/validation.js"></script>
+	<script src="../JavaScript/change-information.js"></script>
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin&display=swap" rel="stylesheet">
 

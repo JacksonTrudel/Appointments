@@ -6,6 +6,9 @@ insert into defaultAvailabilityDay (dDayKey, dStartTime, dEndTime, dUnavailable)
 
 insert into duration (dLength) values (15), (30), (45), (60);
 
+
+insert into cookie (randomCookie) values (-1);
+
 select * from customer;
 select * from appointment;
 select * from duration;

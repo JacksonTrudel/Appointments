@@ -3,12 +3,13 @@
 
 <head>
 	<meta charset="utf-8" />
-	<title>Homepage</title>
+	<title>Rendezvous</title>
 	<!-- Bootstrap core CSS -->
 	<link href="../CSS/bootstrap-4.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 	<script src="../JavaScript/availability.js"></script>
+	<script src="../JavaScript/login.js"></script>
 
 </head>
 
@@ -45,38 +46,9 @@
 		</div>
 		<!-- Main Row, divided into default availability and special dates -->
 		<div class="row">
-			<!-- Special dates section -->
-			<div class="col-md-4 order-md-2 mb-4" id="special_dates_content">
-				<h4 class="d-flex justify-content-between align-items-center mb-3">
-					<!-- Special dates header and badge -->
-					<span class="text-muted">Special Dates</span>
-					<span class="badge badge-secondary badge-pill" id="total_special">0</span>
-				</h4>
-				<ul class="list-group mb-3" id="product_list">
-					<div id="product_insert_div">
-						<!-- Default - EMPTY -->
-						<div class="list-group-item d-flex justify-content-between lh-condensed bg-light" style="max-height:50px; width = 100%; text-align: center">
-							<h6 style="margin: auto auto">EMPTY</h6>
-
-						</div>
-
-					</div>
-					<!-- example
-                        <li class="list-group-item d-flex justify-content-between">
-                            <h6><span>Total (USD)</span></h6>
-                            <strong id="purchase_total">$0</strong>
-                        </li>
-											-->
-				</ul>
-
-				<div class="d-flex my-2">
-					<button type="button" class="btn btn-success" id="complete_button" style="width: 100%; display:none" onclick="completePurchase()">Complete</button>
-				</div>
-
-			</div>
 
 			<!-- Default Availability Section -->
-			<div class="col-md-8 order-md-1" id="default_availability_section">
+			<div class="col order-md-1" id="default_availability_section">
 
 				<h5 class="mb-3">Default Availability</h5>
 				<ul class="list-group list-group-flush">
@@ -163,7 +135,7 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+	<script>validateLogin()</script>
 </body>
 
 </html>

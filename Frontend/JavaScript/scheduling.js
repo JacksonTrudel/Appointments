@@ -43,7 +43,7 @@ function searchForAppointments() {
   if (!passesValidation(date, duration)) {
     return false;
   }
-  
+
   message = `{"foo":"get_available_appointments", "date":"${date}", "duration":"${duration}"}`;
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
@@ -71,7 +71,8 @@ function searchForAppointments() {
 
         const timesContainer = document.getElementById("display_available_container");
         timesContainer.innerHTML = "";
-        for (var i = 0; i < info.times.length; i++) {
+        var i = 0
+        for (i = 0; i < info.times.length; i++) {
           var appStart = info.times[i][0];
           var startSuffix = "am";
           var appEnd = info.times[i][1];
@@ -107,13 +108,25 @@ function searchForAppointments() {
           endMin = endMin.toString().padStart(2, "0");
 
 
-          timesContainer.innerHTML += `<button type="button" id="timeSlot-${i}" class="btn btn-info appointment-time" style="flex-basis: 30%;" onclick="confirmAppointment(${i})">${startHour}:${startMin}${startSuffix} - ${endHour}:${endMin}${endSuffix}</button>`;
+          timesContainer.innerHTML += `<div class="col" style="width:30%"><button type="button" id="timeSlot-${i}" class="btn btn-info appointment-time" onclick="confirmAppointment(${i})" style="width:100%;">${startHour}:${startMin}${startSuffix} - ${endHour}:${endMin}${endSuffix}</button></div>`;
+          if ((i+1) % 3 == 0){
+            timesContainer.innerHTML +=`
+						<div class="w-100"></div>`;
+          }
           $("#display_available_container").data("start" + i, info.times[i][0]);
           $("#display_available_container").data("end" + i, info.times[i][1]);
           $("#display_available_container").data("startFormatted" + i, "" + startHour + ":" + startMin + "" + startSuffix);
           $("#display_available_container").data("endFormatted" + i, "" + endHour + ":" + endMin + "" + endSuffix);
           $("#display_available_container").data("dateFormatted" + i, formattedDate);
           $("#display_available_container").data("date" + i, date);
+        }
+        // add cols for formatting
+
+        console.log(i);
+        while ((i + 1) % 3 != 1) {
+          timesContainer.innerHTML +=`
+          <div class="col" style="hidden"></div>`;
+          i++;
         }
         document.getElementById("number-available").innerHTML = info.times.length;
         return false;

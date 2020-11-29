@@ -9,7 +9,6 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 	<script src="../JavaScript/availability.js"></script>
-	<script src="../JavaScript/login.js"></script>
 
 </head>
 
@@ -23,13 +22,16 @@
 			<div class="collapse navbar-collapse" id="navbarCollapse">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item">
-						<a class="nav-link" href="./manager-homepage.html">Home</a>
+						<a class="nav-link" href="./homepage.html">Home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="./manager-availability.html">Availability</a>
+						<a class="nav-link" href="./book-appointment.html">Book</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="./view-appointments.html">View Appointments</a>
+						<a class="nav-link" href="./search-appointment.html">Search</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="./availability.html">Availability</a>
 					</li>
 				</ul>
 				<form method="post" action="..\..\Backend\logout.php">
@@ -41,16 +43,13 @@
 	<!-- Begin page content -->
 	<main role="main" class="container" id="mainPageContainer">
 		<!-- "Manage your availability."-->
-		<div class="py-5 text-center">
-			<p class="lead" style="margin-top:30px">View your availability.</p>
-		</div>
 		<!-- Main Row, divided into default availability and special dates -->
-		<div class="row">
+		<div class="row" style="margin-top:150px;">
 
 			<!-- Default Availability Section -->
 			<div class="col order-md-1" id="default_availability_section">
 
-				<h5 class="mb-3">Default Availability</h5>
+				<h5 class="mb-3">Availability</h5>
 				<ul class="list-group list-group-flush">
 					<li class="list-group-item" id="sunday">
 						<b>Sunday:</b> <span id="sunday_start"></span> to <span id="sunday_end"></span>
@@ -78,6 +77,7 @@
 							displayDefaultAvailability();
 						</script>
 
+
 			</div>
 		</div>
 
@@ -89,7 +89,7 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<script>validateLogin()</script>
+
 </body>
 
 </html>

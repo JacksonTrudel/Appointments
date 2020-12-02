@@ -96,7 +96,7 @@ function displayHourly(date) {
 
             // add element for this day
             htmlToAdd += `
-    						<h4  style="margin-top:40px;"><span>${dayOfWeek} - ${month}/${day}/${year}</span></h4>`;
+    						<h4  style="margin-top:40px;"><span>${dayOfWeek} - ${month + 1}/${day}/${year}</span></h4>`;
             var prevHour = 0;
 
             // for each appointment in this day
@@ -588,7 +588,7 @@ function closeCancellationModal() {
 }
 
 // --------------------- ALWAYS EXECUTES ON LOAD ---------------------
-// sets the minimum date on the date input field 
+// sets the minimum date on the date input field
 var today = new Date();
 var dd = String(today.getDate()).padStart(2, '0');
 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!

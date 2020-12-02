@@ -5,7 +5,7 @@ class Database{
     private $host = "127.0.0.1:3306";
     private $db_name = "appointmentsystem";
     private $username = "Client";
-    private $password = "Svalone97!";
+    private $password = "Catdog123!@";
     public $conn;
     // get the database connection
     public function getConnection(){

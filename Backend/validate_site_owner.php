@@ -1,4 +1,5 @@
 <?php
+	// include the database file
   include("config/database.php");
   $obj = json_decode(file_get_contents('php://input'), true);
 
@@ -18,6 +19,7 @@
     {
       $response->input = $obj;
 
+      // based on the requested information, call the appropriate function
       switch($obj['foo'])
       {
         case "validate_owner":
@@ -34,6 +36,8 @@
     exit();
   }
 
+  // determines whether the user is logged in as the site-owner by comparing the stored cookie to
+  // the one in the database
    function validate_owner($transmit) {
       global $database, $response;
 

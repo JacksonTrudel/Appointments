@@ -1,3 +1,24 @@
+/*
+ *   search-appointment.js
+ *
+ *   Author:               Jackson Trudel
+ *   Attached to pages:    search-appointment.html
+ *   Purpose:               - defines searchAppointment, which retrieves and displays the information
+ *                            for the appointment with the appointment ID and last name entered
+ */
+
+ /*
+  *   Function: searchAppointment
+  *   Pages: search-appointment.html
+  *   Pre-Conditions:
+  *        * The ID is stored in an input field with id: "appt_id"
+  *        * The last name is stored in an input field with id: "last_name"
+  *   Post-conditions:
+  *        * Retrieves information of the appointment if there is one with
+  *            (last name = <last_name> and appointment ID = <appt_id>)
+  *        * Displays the three buttons to edit/change_time/cancel if the appointments
+  *              is not within 48 hours.
+  */
 function searchAppointment() {
   var last_name = document.getElementById("last_name").value;
   var appt_id = document.getElementById("appt_id").value;
@@ -15,30 +36,43 @@ function searchAppointment() {
       var info = JSON.parse(this.responseText);
       console.log(info);
       if (info.error != 1) {
+        // if not found, the appointment information is not correct
         if (info.notFound == 1) {
           document.getElementById("not_found").style.display = "flex";
           document.getElementById("appointment_info").style.display = "none";
-        } else {
+        }
+        // if found:
+        else {
+          // display the appointment information, hide not_found prompt
           document.getElementById("not_found").style.display = "none";
           document.getElementById("appointment_info").style.display = "flex";
 
-          //  show prompt and hide menu or display menu and hide the prompt
+
           if (info.withinFortyEight || info.cancelled == 1) {
+            // hide user_menu and show red prompt
             document.getElementById("user_menu").style.display = "none";
             document.getElementById("forty_eight_hour_prompt").style.display = "flex";
 
+            // set the red prompt text appropriately
             if (info.cancelled == 1)
               document.getElementById("warning_text").innerHTML = "THIS APPOINTMENT HAS BEEN CANCELLED.";
-          } else {
+            else
+              document.getElementById("warning_text").innerHTML = "You cannot edit/cancel appointments within 48 hours of the appointment time.";
+
+          }
+          // if not cancelled or within 48 hours:
+          else {
+            // display user_menu and hide prompt
             document.getElementById("user_menu").style.display = "flex";
             document.getElementById("forty_eight_hour_prompt").style.display = "none";
 
+            // set the appt_id in various hidden inputs
             document.getElementById("appt_id_change_info").value = appt_id;
             document.getElementById("appt_id_change_time").value = appt_id;
             document.getElementById("appt_id_cancel_appt").value = appt_id;
           }
 
-          // format fields
+          // format date, time, and phone number fields
           var phone_formatted = "(" + info.phone.substring(0, 3) + ") " + info.phone.substring(3, 6) + " - " + info.phone.substring(6);
           var date_formmated = info.date.substring(5, 7) + "/" + info.date.substring(8) + "/" + info.date.substring(0, 4);
 

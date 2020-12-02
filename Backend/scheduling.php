@@ -1,4 +1,5 @@
 <?php
+	// include the database file
 	include("config/database.php");
 	$obj = json_decode(file_get_contents('php://input'), true);
 
@@ -8,7 +9,6 @@
 		session_start();//$response->session = $database->createSession();
 		$response = new \stdClass();
 
-		$response->conn = $conn;
 
 		$response->error = false;
 		if(mysqli_connect_errno($conn))
@@ -19,7 +19,7 @@
 		else
 		{
       $response->input = $obj;
-
+			// based on the requested information, call the appropriate function
 			switch($obj['foo'])
 			{
 				case "get_durations":
@@ -52,6 +52,7 @@
 		exit();
 	}
 
+	// retrieves the possible appointment durations and stores them in $response object
 	function get_durations($transmit){
     global $database, $conn, $response;
 
@@ -105,7 +106,8 @@
 		}
 	}
 
-
+	// calls procedure getAppointmentTimes, passes the date,
+	// to retrieve the possible appointment times for the user
 	function get_possible_times($transmit) {
 		global $database, $conn, $response;
 		// need a new PDO to make a new query
@@ -235,12 +237,16 @@
 
 	}
 
+	// determines which function to call: get_default_availability() or get_possible_times()
+	// based on whether the date exists as a Workday in the database
 	function get_available_appointments($transmit) {
 	    global $database, $conn, $response;
 
 			$conn = $database->getConnection();
+			// call dateExists procedure
 			$stmt = $conn->query("call dateExists(\"{$transmit["date"]}\")");
 
+			// store response set
 			if ($row = $stmt->fetch()) {
 				$response->dayID = intval($row["id"]);
 				$response->dayExists = intval($row["exsts"]);
@@ -261,10 +267,13 @@
 			}
 	}
 
+	// calls the bookAppointment procedure which stores a date for an appointment that exists in the system
+	// but does not have a date set (is invalid)
 	function schedule_appointment($transmit){
 		global $database, $conn, $response;
 
 		$response->no_app_id = false;
+		// make sure necessary cookies are set
 		if (!isset($_SESSION['appt_id'])) {
 			$response->no_app_id = true;
 			return;
@@ -276,6 +285,7 @@
 		}
 
 		$conn = $database->getConnection();
+		// call bookAppointment procedure to set the date, time, and validity of the appointment with appt_id
 		$stmt = $conn->query("call bookAppointment({$_SESSION['appt_id']}, \"{$transmit['date']}\", {$_SESSION['dayOfWeek']}, \"{$transmit['start']}\", \"{$transmit['end']}\")");
 
 
@@ -285,7 +295,8 @@
 			if ($response->success == 1)
 				$response->apptId = intval($row["id"]);
 
-			unset($_SESSION['app_id']);
+			// no longer need to store the appt_id as a cookie
+			unset($_SESSION['appt_id']);
 		}
 	}
 
@@ -294,11 +305,12 @@
 		global $database, $conn, $response;
 
 		$conn = $database->getConnection();
-		$response->query = "select dayofweek(\"{$transmit['date']}\") as _dayOfWeek";
+		// get the day of week for the current date
 		$stmt = $conn->query("select dayofweek(\"{$transmit['date']}\") as _dayOfWeek");
 		$row = $stmt->fetch();
 		$dayOfWeek = intval($row["_dayOfWeek"]);
 
+		// it is expected this cookie is set. If not set, return an error
 		if (!isset($_SESSION['appt_id_change_time']))
 		{
 			$response->error = 1;
@@ -306,24 +318,26 @@
 
 		}
 		else {
-
+			// get the cookie which stores the appt_id
 			$id = intval($_SESSION['appt_id_change_time']);
 			$conn = $database->getConnection();
-			$response->query = "call bookAppointment({$id}, \"{$transmit['date']}\", {$dayOfWeek}, \"{$transmit['start']}\", \"{$transmit['end']}\")";
+			// call bookAppointment procedure to change the appointment time
 			$stmt = $conn->query("call bookAppointment({$id}, \"{$transmit['date']}\", {$dayOfWeek}, \"{$transmit['start']}\", \"{$transmit['end']}\")");
 			if ($row2 = $stmt->fetch()) {
 				$response->success = intval($row2["success"]);
 
 				if ($response->success == 1)
 					$response->apptId = intval($row2["id"]);
+				unset($_SESSION['appt_id_change_time']);
 			}
 		}
 
 	}
 
+	// called before loading reschedule-appointment.html, stores cookie appt_id_change_time
 	function store_appt_id_change_time($transmit) {
 			global $database, $response;
-
+			// store cookie
 			$_SESSION['appt_id_change_time'] = $transmit["appt_id"];
 	}
 ?>

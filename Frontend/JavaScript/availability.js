@@ -1,7 +1,30 @@
-function displayDefaultAvailability() {
-  const avail_sect = document.getElementById("default_availability_section");
+/*   availability.js
+ *
+ *   Author: Jackson Trudel
+ *   This file contains the definition for 1 function which is responsible
+ *   for displaying availability on days without any scheduled appointments.
+ */
 
+
+/*
+ *   function: displayDefaultAvailability
+ *   pages: availability.html, manager-availability.html
+ *   Pre-conditions:
+ *        * page contains rows to display data.
+ *                 > each row contains three relevant DOM elements: <k>_start, <k_end> and <k>, where you replace <k> with
+ *                        the enumeration for the given day [Sunday = 0, Monday = 1, ... Saturday = 6]
+ *        * default_availability.php returns a JSON-encoded response object (info)
+ *        * the relative path to default_availability.php is: "../../Backend/default_availability.php"
+ *   Post-conditions:
+ *        * processes the response from default_availability.php
+ *        * displays the site-owner's availability in the appropriate elements
+ *                 > displays "unavailable" if the site-owner is closed on the given day
+ *                 > Otherwise, displays the start and end time for the given day.
+ */
+function displayDefaultAvailability() {
+  // input message to XMLHttpRequest
   message = `{"foo":"get_default_availability"}`;
+
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -67,6 +90,7 @@ function displayDefaultAvailability() {
             endHour = (hrParse - 12).toString();
           }
 
+          // fill in elements with the approriate, formatted times
           elem = document.getElementById(dayDict[i] + "_start");
           elem.innerHTML = startHour + `:` + startMin + ` ` + startSuffix;
 

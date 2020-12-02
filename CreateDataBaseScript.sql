@@ -44,6 +44,7 @@ create table appointment (
   index(aId)
 );
 
+# not utilized in current system
 create table availabilityBlackout (
   aId integer auto_increment,
   aWorkday_id integer not null,
@@ -74,4 +75,3 @@ create table duration (
 create table cookie (
 	randomCookie integer not null
 );
-

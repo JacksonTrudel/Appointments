@@ -1,4 +1,5 @@
 <?php
+	// include the database file
 	include("config/database.php");
 	$obj = json_decode(file_get_contents('php://input'), true);
 
@@ -18,7 +19,7 @@
 		else
 		{
       $response->input = $obj;
-
+			// based on the requested information, call the appropriate function
 			switch($obj['foo'])
 			{
 				case "search_appointment":
@@ -42,6 +43,7 @@
 		exit();
 	}
 
+	// retrieves the appointment information with the appointment ID: $transmit["appt_id"]
   function search_appointment($transmit) {
     global $database, $response;
     // need a new PDO to make a new query
@@ -79,7 +81,9 @@
     }
   }
 
-
+	// retrieves all the appointment information from $transmit["date"]
+	// to an end date which is determined by the value of $transmit["format"]
+	// Stored in a daily breakdown
   function view_appointments($transmit){
       global $database, $response;
       $conn = $database->getConnection();
@@ -171,6 +175,9 @@
 			}
   }
 
+	// retrieves all the appointment information from $transmit["date"]
+	// to an end date which is determined by the value of $transmit["format"]
+	// Stored in a daily breakdown
 	function view_appointments_weekly($transmit){
       global $database, $response;
       $conn = $database->getConnection();
@@ -187,6 +194,7 @@
       $stmt = $conn->query("call viewAppointments(\"{$transmit["date"]}\", \"{$response->endDate}\")");
 			$response->week = array();
 			for ($i = 0; $i < 10; $i++) {
+				// create new class for the week and create time information
 				$response->week[$i] = new \stdClass();
 				$response->week[$i]->startDate = $tracesWeek->format("Y-m-d");
 				$response->week[$i]->endDate = $tracesWeek->modify("+6 day")->format("Y-m-d");
@@ -198,7 +206,7 @@
 				$response->week[$i]->day = array();
 				$tracesWeek = $tracesWeek->modify("+7 day");
 			}
-
+			// for each record in the record set
 			while ($row = $stmt->fetch()) {
 				$date = new DateTimeImmutable("{$row["wDate"]} {$row["aStartTime"]}");
 				$found = -1;

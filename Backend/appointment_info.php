@@ -67,7 +67,7 @@
 		$stmt = $conn->query("call createAppointment(".$response->_id.",\"".$transmit["subject"]."\",\"".$transmit["notes"]."\")");
 
 		// store the appointment ID in a session cookie
-		if ($row = $stmt->fetch()) {
+	  if($row = $stmt->fetch()) {
 			$_SESSION['appt_id'] = $row["appointment_id"];
 			$response->_appt_id = $_SESSION['appt_id'];
 		}
@@ -89,12 +89,12 @@
 	}
 
 	// cancels the existing appointment
-	function cancel_appointment($transmit) {
+	function cancel_appointment($transmit){
 		global $database, $conn, $response;
 		$conn = $database->getConnection();
-		// no procedure call, just SQL
-		$stmt = $conn->query("update Appointment set aCancelled = true where aId = ".$transmit["appt_id"]);
-		$response->row = $stmt->fetch();
-
+		$stmt = $conn->query("update appointment set aCancelled = true where aId = ".$transmit["appt_id"]);
+		if ($response->row = $stmt->fetch()) {
+			$response->success = 1;
+		}
 	}
 ?>
